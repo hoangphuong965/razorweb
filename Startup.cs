@@ -62,3 +62,7 @@ namespace WebApplication1
         }
     }
 }
+
+/*
+ dotnet aspnet-codegenerator razorpage -m WebApplication1.Models.Article -dc WebApplication1.Models.MyBlogContext -outDir Pages/Blog -udl --referenceScriptLibraries
+ */
