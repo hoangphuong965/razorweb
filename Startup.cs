@@ -1,4 +1,7 @@
 ﻿using Album.Mail;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -78,11 +81,26 @@ namespace WebApplication1
                 options.SignIn.RequireConfirmedAccount = true;      // phải xác nhận tài khoản mới cho đăng nhập
             });
 
+            // config authen
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/login/";
                 options.LogoutPath = "/logout/";
                 options.AccessDeniedPath = "/khongduoctruycap/html";
+            });
+
+            //them dich vu ngoai: Google,...
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddGoogle(GoogleDefaults.AuthenticationScheme,options =>
+            {
+                options.ClientId = Configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                options.CallbackPath = "/dang-nhap-tu-google";
             });
         }
 

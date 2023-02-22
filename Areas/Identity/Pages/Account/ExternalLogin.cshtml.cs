@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -64,11 +64,17 @@ namespace WebApplication1.Areas.Identity.Pages.Account
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            // return sẽ render tren trinh duyet va xuất hiện popup để user kết nối đến với ứng dụng và cho phép ứng dụng truy cập vào thông tin của user
+            // khi người dùng cho phép thì dịch vụ ngoài sẽ gửi đến cho ta một token thông qua địa chỉ callpath (trong config - startup) lưu trong session
+            // và tự động truy cập kết nối đến với tài khoản user và chuyển hướng về OnGetCallbackAsync
+           
             return new ChallengeResult(provider, properties);
         }
 
+        // pageHandler: "Callback" sẽ đọc tại OnGetCallbackAsync từ session 
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
+            return Content("dung tai lai day");
             returnUrl = returnUrl ?? Url.Content("~/");
             if (remoteError != null)
             {
