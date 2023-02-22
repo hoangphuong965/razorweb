@@ -37,7 +37,8 @@ namespace WebApplication1.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage();
+                returnUrl = Url.Content("~/");
+                return LocalRedirect(returnUrl);
             }
         }
     }
