@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Models;
+using WebApplication1.Services;
 
 namespace WebApplication1
 {
@@ -82,8 +83,10 @@ namespace WebApplication1
             {
                 options.LoginPath = "/login/";
                 options.LogoutPath = "/logout/";
-                options.AccessDeniedPath = "/khongduoctruycap/html";
+                options.AccessDeniedPath = "/khongduoctruycap.html";
             });
+
+            services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,8 +128,17 @@ namespace WebApplication1
  Identity:
     - Authentication: Xác định danh tính -> login, logout, ...
     - Authorization: Xác thực quyền truy cập
-    - Quản lý user: Sign Up, User, Role ...
+        -Role-based-authorization: xac thuc quyen theo vai tro
+        /Areas/Admin/Pages/Role
+        Index
+        Create
+        Edit
+        Delete
+        dotnet new page --name Index --namespace tennamespace --output a/b/c
+    
+- Quản lý user: Sign Up, User, Role ...
 
-dotnet aspnet-codegenerator identity -dc WebApplication1.Models.MyBlogContext
+- [Authorize]: Controller,Action,PageModel -> dang nhap
+        
 
  */
